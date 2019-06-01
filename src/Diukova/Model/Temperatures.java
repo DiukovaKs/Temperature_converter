@@ -1,23 +1,6 @@
-package Diukova.Temperatures;
+package Diukova.Model;
 
 public class Temperatures {
-    public static boolean isDigit(String s) {
-        int count = 0;
-        for (int i = 0; i < s.length(); i++) {
-            if (Character.isDigit(s.charAt(i)) || s.charAt(i) == '.') {
-                if (s.charAt(i) == '.') {
-                    count++;
-                }
-                if (count > 1) {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public static double convertCelsiusToKelvin(double temperatureInCelsius) {
         return temperatureInCelsius + 273.15;
     }
