@@ -1,5 +1,9 @@
 package Diukova.View;
 
+import Diukova.Model.Celsius;
+import Diukova.Model.Fahrenheit;
+import Diukova.Model.Kelvin;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -14,42 +18,6 @@ public class View {
     private JRadioButton radioButton5;
     private JRadioButton radioButton6;
     private JButton convert;
-
-    public JFrame getFrame() {
-        return frame;
-    }
-
-    public JTextField getInsertTempField() {
-        return insertTempField;
-    }
-
-    public JTextField getCalculatedField() {
-        return calculatedField;
-    }
-
-    public JRadioButton getRadioButton1() {
-        return radioButton1;
-    }
-
-    public JRadioButton getRadioButton2() {
-        return radioButton2;
-    }
-
-    public JRadioButton getRadioButton3() {
-        return radioButton3;
-    }
-
-    public JRadioButton getRadioButton4() {
-        return radioButton4;
-    }
-
-    public JRadioButton getRadioButton5() {
-        return radioButton5;
-    }
-
-    public JRadioButton getRadioButton6() {
-        return radioButton6;
-    }
 
     public JButton getButton() {
         return convert;
@@ -134,5 +102,42 @@ public class View {
         center.add(convert);
 
         frame.setVisible(true);
+
+        convert.addActionListener(e -> {
+            try {
+                Double.parseDouble(insertTempField.getText());
+            } catch (NumberFormatException e2) {
+                JOptionPane.showMessageDialog(frame, "Enter number!", "Inane Warning", JOptionPane.WARNING_MESSAGE);
+            }
+            double temp = 0.0;
+            if (radioButton1.isSelected() && radioButton4.isSelected()) {
+                temp = Celsius.convertCelsiusToCelsius(Double.parseDouble(insertTempField.getText()));
+            }
+            if (radioButton1.isSelected() && radioButton5.isSelected()) {
+                temp = Celsius.convertCelsiusToKelvin(Double.parseDouble(insertTempField.getText()));
+            }
+            if (radioButton1.isSelected() && radioButton6.isSelected()) {
+                temp = Celsius.convertCelsiusToFahrenheit(Double.parseDouble(insertTempField.getText()));
+            }
+            if (radioButton2.isSelected() && radioButton4.isSelected()) {
+                temp = Kelvin.convertKelvinToCelsius(Double.parseDouble(insertTempField.getText()));
+            }
+            if (radioButton2.isSelected() && radioButton5.isSelected()) {
+                temp = Kelvin.convertKelvinToKelvin(Double.parseDouble(insertTempField.getText()));
+            }
+            if (radioButton2.isSelected() && radioButton6.isSelected()) {
+                temp = Kelvin.convertKelvinToFahrenheit(Double.parseDouble(insertTempField.getText()));
+            }
+            if (radioButton3.isSelected() && radioButton4.isSelected()) {
+                temp = Fahrenheit.convertFahrenheitToCelsius(Double.parseDouble(insertTempField.getText()));
+            }
+            if (radioButton3.isSelected() && radioButton5.isSelected()) {
+                temp = Fahrenheit.convertFahrenheitToKelvin(Double.parseDouble(insertTempField.getText()));
+            }
+            if (radioButton3.isSelected() && radioButton6.isSelected()) {
+                temp = Fahrenheit.convertFahrenheitToFahrenheit(Double.parseDouble(insertTempField.getText()));
+            }
+            calculatedField.setText(Double.toString(temp));
+        });
     }
 }
