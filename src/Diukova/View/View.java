@@ -1,8 +1,8 @@
 package Diukova.View;
 
-import Diukova.Model.Celsius;
-import Diukova.Model.Fahrenheit;
-import Diukova.Model.Kelvin;
+import Diukova.Models.Celsius;
+import Diukova.Models.Fahrenheit;
+import Diukova.Models.Kelvin;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +23,7 @@ public class View {
         return convert;
     }
 
-    {
+    public View() {
         // Объявление фрейма
         frame = new JFrame("Temperature converter");
         frame.setSize(500, 230);
@@ -108,34 +108,53 @@ public class View {
                 Double.parseDouble(insertTempField.getText());
             } catch (NumberFormatException e2) {
                 JOptionPane.showMessageDialog(frame, "Enter number!", "Inane Warning", JOptionPane.WARNING_MESSAGE);
+                return;
             }
-            double temp = 0.0;
-            if (radioButton1.isSelected() && radioButton4.isSelected()) {
-                temp = Celsius.convertCelsiusToCelsius(Double.parseDouble(insertTempField.getText()));
+            double temp = Double.parseDouble(insertTempField.getText());
+            //convert to Celsius
+            if (radioButton4.isSelected()) {
+                if (radioButton1.isSelected()) {
+                    Celsius c = new Celsius();
+                    temp = c.convertFromCelsius(temp);
+                }
+                if (radioButton2.isSelected()) {
+                    Kelvin k = new Kelvin();
+                    temp = k.convertToCelsius(temp);
+                }
+                if (radioButton3.isSelected()) {
+                    Fahrenheit f = new Fahrenheit();
+                    temp = f.convertToCelsius(temp);
+                }
             }
-            if (radioButton1.isSelected() && radioButton5.isSelected()) {
-                temp = Celsius.convertCelsiusToKelvin(Double.parseDouble(insertTempField.getText()));
+            //convert to Kelvin
+            if (radioButton5.isSelected()) {
+                if (radioButton1.isSelected()) {
+                    Kelvin k = new Kelvin();
+                    temp = k.convertFromCelsius(temp);
+                }
+                if (radioButton2.isSelected()) {
+                    Kelvin k = new Kelvin();
+                    temp = k.convertFromKelvin(temp);
+                }
+                if (radioButton3.isSelected()) {
+                    Fahrenheit f = new Fahrenheit();
+                    temp = f.convertToKelvin(temp);
+                }
             }
-            if (radioButton1.isSelected() && radioButton6.isSelected()) {
-                temp = Celsius.convertCelsiusToFahrenheit(Double.parseDouble(insertTempField.getText()));
-            }
-            if (radioButton2.isSelected() && radioButton4.isSelected()) {
-                temp = Kelvin.convertKelvinToCelsius(Double.parseDouble(insertTempField.getText()));
-            }
-            if (radioButton2.isSelected() && radioButton5.isSelected()) {
-                temp = Kelvin.convertKelvinToKelvin(Double.parseDouble(insertTempField.getText()));
-            }
-            if (radioButton2.isSelected() && radioButton6.isSelected()) {
-                temp = Kelvin.convertKelvinToFahrenheit(Double.parseDouble(insertTempField.getText()));
-            }
-            if (radioButton3.isSelected() && radioButton4.isSelected()) {
-                temp = Fahrenheit.convertFahrenheitToCelsius(Double.parseDouble(insertTempField.getText()));
-            }
-            if (radioButton3.isSelected() && radioButton5.isSelected()) {
-                temp = Fahrenheit.convertFahrenheitToKelvin(Double.parseDouble(insertTempField.getText()));
-            }
-            if (radioButton3.isSelected() && radioButton6.isSelected()) {
-                temp = Fahrenheit.convertFahrenheitToFahrenheit(Double.parseDouble(insertTempField.getText()));
+            //convert to Fahrenheit
+            if (radioButton6.isSelected()) {
+                if (radioButton1.isSelected()) {
+                    Fahrenheit f = new Fahrenheit();
+                    temp = f.convertFromCelsius(temp);
+                }
+                if (radioButton2.isSelected()) {
+                    Fahrenheit f = new Fahrenheit();
+                    temp = f.convertFromKelvin(temp);
+                }
+                if (radioButton3.isSelected()) {
+                    Fahrenheit f = new Fahrenheit();
+                    temp = f.convertFromFahrenheit(temp);
+                }
             }
             calculatedField.setText(Double.toString(temp));
         });
