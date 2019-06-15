@@ -1,8 +1,8 @@
 package Diukova.View;
 
-import Diukova.Models.Celsius;
-import Diukova.Models.Fahrenheit;
-import Diukova.Models.Kelvin;
+import Diukova.Models.CelsiusScale;
+import Diukova.Models.FahrenheitScale;
+import Diukova.Models.KelvinScale;
 
 import javax.swing.*;
 import java.awt.*;
@@ -73,9 +73,9 @@ public class View {
         west.add(initialTemperatureScaleLabel);
 
         ButtonGroup bg1 = new ButtonGroup();
-        radioButton1 = new JRadioButton("Celsius", true);
-        radioButton2 = new JRadioButton("Kelvin");
-        radioButton3 = new JRadioButton("Fahrenheit");
+        radioButton1 = new JRadioButton("CelsiusScale", true);
+        radioButton2 = new JRadioButton("KelvinScale");
+        radioButton3 = new JRadioButton("FahrenheitScale");
         bg1.add(radioButton1);
         bg1.add(radioButton2);
         bg1.add(radioButton3);
@@ -87,9 +87,9 @@ public class View {
         east.add(calculatedTemperatureScaleLabel);
 
         ButtonGroup bg2 = new ButtonGroup();
-        radioButton4 = new JRadioButton("Celsius", true);
-        radioButton5 = new JRadioButton("Kelvin");
-        radioButton6 = new JRadioButton("Fahrenheit");
+        radioButton4 = new JRadioButton("CelsiusScale", true);
+        radioButton5 = new JRadioButton("KelvinScale");
+        radioButton6 = new JRadioButton("FahrenheitScale");
         bg2.add(radioButton4);
         bg2.add(radioButton5);
         bg2.add(radioButton6);
@@ -111,48 +111,48 @@ public class View {
                 return;
             }
             double temp = Double.parseDouble(insertTempField.getText());
-            //convert to Celsius
+            //convert to CelsiusScale
             if (radioButton4.isSelected()) {
                 if (radioButton1.isSelected()) {
-                    Celsius c = new Celsius();
+                    CelsiusScale c = new CelsiusScale();
                     temp = c.convertFromCelsius(temp);
                 }
                 if (radioButton2.isSelected()) {
-                    Kelvin k = new Kelvin();
+                    KelvinScale k = new KelvinScale();
                     temp = k.convertToCelsius(temp);
                 }
                 if (radioButton3.isSelected()) {
-                    Fahrenheit f = new Fahrenheit();
+                    FahrenheitScale f = new FahrenheitScale();
                     temp = f.convertToCelsius(temp);
                 }
             }
-            //convert to Kelvin
+            //convert to KelvinScale
             if (radioButton5.isSelected()) {
                 if (radioButton1.isSelected()) {
-                    Kelvin k = new Kelvin();
+                    KelvinScale k = new KelvinScale();
                     temp = k.convertFromCelsius(temp);
                 }
                 if (radioButton2.isSelected()) {
-                    Kelvin k = new Kelvin();
+                    KelvinScale k = new KelvinScale();
                     temp = k.convertFromKelvin(temp);
                 }
                 if (radioButton3.isSelected()) {
-                    Fahrenheit f = new Fahrenheit();
+                    FahrenheitScale f = new FahrenheitScale();
                     temp = f.convertToKelvin(temp);
                 }
             }
-            //convert to Fahrenheit
+            //convert to FahrenheitScale
             if (radioButton6.isSelected()) {
                 if (radioButton1.isSelected()) {
-                    Fahrenheit f = new Fahrenheit();
+                    FahrenheitScale f = new FahrenheitScale();
                     temp = f.convertFromCelsius(temp);
                 }
                 if (radioButton2.isSelected()) {
-                    Fahrenheit f = new Fahrenheit();
+                    FahrenheitScale f = new FahrenheitScale();
                     temp = f.convertFromKelvin(temp);
                 }
                 if (radioButton3.isSelected()) {
-                    Fahrenheit f = new Fahrenheit();
+                    FahrenheitScale f = new FahrenheitScale();
                     temp = f.convertFromFahrenheit(temp);
                 }
             }

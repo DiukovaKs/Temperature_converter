@@ -1,9 +1,9 @@
 package Diukova.Models;
 
-import Diukova.ScaleModelInterface.ScaleModel;
+import Diukova.ScaleModelInterface.Scale;
 
-public class Fahrenheit implements ScaleModel {
-    public Fahrenheit() {
+public class FahrenheitScale implements Scale {
+    public FahrenheitScale() {
     }
 
     @Override
@@ -12,28 +12,27 @@ public class Fahrenheit implements ScaleModel {
     }
 
     @Override
-    public double convertFromKelvin(double temperature) {
-        temperature = convertFromKelvinToCelsius(temperature);
-        temperature = convertFromCelsius(temperature);
-        return temperature;
-    }
-
-    @Override
-    public double convertFromFahrenheit(double temperature) {
-        return temperature;
-    }
-
-    private static double convertFromKelvinToCelsius(double temperature) {
-        return temperature - 273.15;
-    }
-
     public double convertToCelsius(double temperature) {
         temperature = convertToKelvin(temperature);
         temperature = convertFromKelvinToCelsius(temperature);
         return temperature;
     }
 
+    public double convertFromKelvin(double temperature) {
+        temperature = convertFromKelvinToCelsius(temperature);
+        temperature = convertFromCelsius(temperature);
+        return temperature;
+    }
+
     public double convertToKelvin(double temperature) {
         return (temperature - 32) * 5 / 9 + 273.15;
+    }
+
+    private static double convertFromKelvinToCelsius(double temperature) {
+        return temperature - 273.15;
+    }
+
+    public double convertFromFahrenheit(double temperature) {
+        return temperature;
     }
 }
