@@ -16,7 +16,7 @@ public class KelvinScale implements Scale {
         return temperature - 273.15;
     }
 
-    public double convertFromKelvin(double temperature) {
+    public double convertToKelvin(double temperature) {
         return temperature;
     }
 }

@@ -115,7 +115,7 @@ public class View {
             if (radioButton4.isSelected()) {
                 if (radioButton1.isSelected()) {
                     CelsiusScale c = new CelsiusScale();
-                    temp = c.convertFromCelsius(temp);
+                    temp = c.convertToCelsius(temp);
                 }
                 if (radioButton2.isSelected()) {
                     KelvinScale k = new KelvinScale();
@@ -134,7 +134,7 @@ public class View {
                 }
                 if (radioButton2.isSelected()) {
                     KelvinScale k = new KelvinScale();
-                    temp = k.convertFromKelvin(temp);
+                    temp = k.convertToKelvin(temp);
                 }
                 if (radioButton3.isSelected()) {
                     FahrenheitScale f = new FahrenheitScale();
@@ -153,7 +153,7 @@ public class View {
                 }
                 if (radioButton3.isSelected()) {
                     FahrenheitScale f = new FahrenheitScale();
-                    temp = f.convertFromFahrenheit(temp);
+                    temp = f.convertToFahrenheit(temp);
                 }
             }
             calculatedField.setText(Double.toString(temp));

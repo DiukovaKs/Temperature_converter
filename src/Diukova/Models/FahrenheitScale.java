@@ -32,7 +32,7 @@ public class FahrenheitScale implements Scale {
         return temperature - 273.15;
     }
 
-    public double convertFromFahrenheit(double temperature) {
+    public double convertToFahrenheit(double temperature) {
         return temperature;
     }
 }
