@@ -1,31 +1,15 @@
 package Diukova.View;
 
-import Diukova.Models.CelsiusScale;
-import Diukova.Models.FahrenheitScale;
-import Diukova.Models.KelvinScale;
+import Diukova.Main.Converter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
 
 public class View {
-    private JFrame frame;
-    private JTextField insertTempField;
-    private JTextField calculatedField;
-    private JRadioButton radioButton1;
-    private JRadioButton radioButton2;
-    private JRadioButton radioButton3;
-    private JRadioButton radioButton4;
-    private JRadioButton radioButton5;
-    private JRadioButton radioButton6;
-    private JButton convert;
-
-    public JButton getButton() {
-        return convert;
-    }
-
     public View() {
         // Объявление фрейма
-        frame = new JFrame("Temperature converter");
+        JFrame frame = new JFrame("Temperature converter");
         frame.setSize(500, 230);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -60,44 +44,48 @@ public class View {
         JLabel textBoxLabel = new JLabel("Enter temperature");
         north.add(textBoxLabel);
 
-        insertTempField = new JTextField("", 10);
+        JTextField insertTempField = new JTextField("", 10);
         north.add(insertTempField);
 
         JLabel calculatedTemperatureLabel = new JLabel("Calculated temperature ");
         south.add(calculatedTemperatureLabel);
-        calculatedField = new JTextField("", 15);
+        JTextField calculatedField = new JTextField("", 15);
         south.add(calculatedField);
         calculatedField.setEnabled(false);
 
         JLabel initialTemperatureScaleLabel = new JLabel("Initial temperature scale ");
         west.add(initialTemperatureScaleLabel);
 
+        // Перечень шкал, определяющий количество радиобаттонов на панелях
+        HashMap<String, String> scalesMap = new HashMap<>();
+        scalesMap.put("Celsius", "Celsius");
+        scalesMap.put("Kelvin", "Kelvin");
+        scalesMap.put("Fahrenheit", "Fahrenheit");
+
+        //Группа радиобаттонов исходной шкалы
         ButtonGroup bg1 = new ButtonGroup();
-        radioButton1 = new JRadioButton("CelsiusScale", true);
-        radioButton2 = new JRadioButton("KelvinScale");
-        radioButton3 = new JRadioButton("FahrenheitScale");
-        bg1.add(radioButton1);
-        bg1.add(radioButton2);
-        bg1.add(radioButton3);
-        west.add(radioButton1);
-        west.add(radioButton2);
-        west.add(radioButton3);
+
+        for (String value : scalesMap.values()) {
+            JRadioButton radioButton = new JRadioButton(scalesMap.get(value), true);
+            bg1.add(radioButton);
+            west.add(radioButton);
+            radioButton.setActionCommand(scalesMap.get(value));
+        }
 
         JLabel calculatedTemperatureScaleLabel = new JLabel("Convert to scale");
         east.add(calculatedTemperatureScaleLabel);
 
+        //Группа радиобаттонов конечной шкалы
         ButtonGroup bg2 = new ButtonGroup();
-        radioButton4 = new JRadioButton("CelsiusScale", true);
-        radioButton5 = new JRadioButton("KelvinScale");
-        radioButton6 = new JRadioButton("FahrenheitScale");
-        bg2.add(radioButton4);
-        bg2.add(radioButton5);
-        bg2.add(radioButton6);
-        east.add(radioButton4);
-        east.add(radioButton5);
-        east.add(radioButton6);
 
-        convert = new JButton("Convert");
+        for (String value : scalesMap.values()) {
+            JRadioButton radioButton = new JRadioButton(scalesMap.get(value), true);
+            bg2.add(radioButton);
+            east.add(radioButton);
+            radioButton.setActionCommand(scalesMap.get(value));
+        }
+
+        JButton convert = new JButton("Convert");
         convert.setSize(50, 30);
         center.add(convert);
 
@@ -111,52 +99,9 @@ public class View {
                 return;
             }
             double temp = Double.parseDouble(insertTempField.getText());
-            //convert to CelsiusScale
-            if (radioButton4.isSelected()) {
-                if (radioButton1.isSelected()) {
-                    CelsiusScale c = new CelsiusScale();
-                    temp = c.convertToCelsius(temp);
-                }
-                if (radioButton2.isSelected()) {
-                    KelvinScale k = new KelvinScale();
-                    temp = k.convertToCelsius(temp);
-                }
-                if (radioButton3.isSelected()) {
-                    FahrenheitScale f = new FahrenheitScale();
-                    temp = f.convertToCelsius(temp);
-                }
-            }
-            //convert to KelvinScale
-            if (radioButton5.isSelected()) {
-                if (radioButton1.isSelected()) {
-                    KelvinScale k = new KelvinScale();
-                    temp = k.convertFromCelsius(temp);
-                }
-                if (radioButton2.isSelected()) {
-                    KelvinScale k = new KelvinScale();
-                    temp = k.convertToKelvin(temp);
-                }
-                if (radioButton3.isSelected()) {
-                    FahrenheitScale f = new FahrenheitScale();
-                    temp = f.convertToKelvin(temp);
-                }
-            }
-            //convert to FahrenheitScale
-            if (radioButton6.isSelected()) {
-                if (radioButton1.isSelected()) {
-                    FahrenheitScale f = new FahrenheitScale();
-                    temp = f.convertFromCelsius(temp);
-                }
-                if (radioButton2.isSelected()) {
-                    FahrenheitScale f = new FahrenheitScale();
-                    temp = f.convertFromKelvin(temp);
-                }
-                if (radioButton3.isSelected()) {
-                    FahrenheitScale f = new FahrenheitScale();
-                    temp = f.convertToFahrenheit(temp);
-                }
-            }
-            calculatedField.setText(Double.toString(temp));
+            Converter converter = new Converter();
+            double result = converter.convertTemp(temp, bg1.getSelection().getActionCommand(), bg2.getSelection().getActionCommand());
+            calculatedField.setText(Double.toString(result));
         });
     }
 }
